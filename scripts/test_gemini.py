@@ -23,7 +23,8 @@ print("可用的 Flash 模型：")
 for name in flash_models:
     print("  -", name)
 
-model = flash_models[0]
+# 想換模型就改這一行，名稱從上面印出的清單複製
+model = "models/gemini-3.8-flash"
 print(f"\n使用 {model} 測試…")
 response = client.models.generate_content(
     model=model,
