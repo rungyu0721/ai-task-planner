@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 機密設定（API Key 放這裡，絕對不要上傳）
+.env
+
+# 資料庫檔案
+*.db
+
+# 編輯器
+.vscode/
