@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/style.css">
+<title>新增目標｜智慧任務規劃</title>
+<link rel="stylesheet" href="../css/integration.css">
+<script src="../integration.js" defer></script>
+</head>
+<body>
+<nav class="tp-mobile-nav" aria-label="手機版主要導覽"><a href="dashboard.html">首頁</a><a href="goal-detail.html" aria-current="page">我的目標</a><a href="progress.html">進度分析</a><a href="new-goal.html">新增目標</a></nav>
+<div class="tp-shell"><aside class="tp-side"><div class="tp-brand"><span class="tp-brand__mark"></span>智慧任務規劃</div>
+<nav class="tp-nav"><a href="dashboard.html" class=""><span class="tp-nav__ico"></span>首頁</a><a href="goal-detail.html" class="on"><span class="tp-nav__ico"></span>我的目標</a><a href="progress.html" class=""><span class="tp-nav__ico"></span>進度分析</a><a href="#" class=""><span class="tp-nav__ico"></span>設定</a></nav>
+<div class="tp-side__foot"><a href="new-goal.html" class="tp-btn tp-btn--primary" style="width:100%;justify-content:center;text-decoration:none"><span class="tp-ai-dot"></span>新增目標</a></div></aside>
+<main class="tp-main"><div class="tp-wrap">
+<div class="tp-demo-note" role="note">第二週介面雛形 · 畫面使用範例資料，AI 與儲存功能尚未串接。<span id="backend-status" role="status">正在確認後端連線…</span></div>
+<div><p class="tp-cap" style="margin:0 0 4px">我的目標 / 新增目標</p><h1 class="tp-h1">新增目標</h1><p class="tp-muted" style="margin:4px 0 0">寫下你想完成的事，AI 會先幫你拆成任務草稿，你確認後才會儲存。</p></div>
+<div class="tp-grid-side">
+<section class="tp-card tp-col" style="gap:20px;max-width:var(--form-max)">
+<div class="tp-field"><label class="tp-field__label">目標名稱 <span style="color:var(--status-overdue)">*</span></label><div class="tp-input tp-input--focus">四週內完成資料分析課程期末專題</div></div>
+<div class="tp-field"><label class="tp-field__label">目標說明</label><div class="tp-input tp-input--area">要用公開資料集做分析，最後交一份報告和 10 分鐘簡報。組員 3 人，我負責資料清理和視覺化。</div><span class="tp-field__hint">寫得越具體，AI 拆出來的任務越準。</span></div>
+<div class="tp-row" style="gap:16px;align-items:flex-start"><div class="tp-field" style="flex:1"><label class="tp-field__label">希望完成日期</label><div class="tp-input">2026/11/19</div></div>
+<div class="tp-field" style="flex:1"><label class="tp-field__label">每週可用時間（選填）</label><div class="tp-input">8 小時</div></div></div>
+<div class="tp-row" style="justify-content:space-between;border-top:1px solid var(--line);padding-top:16px"><button class="tp-btn tp-btn--ghost">清除</button>
+<div class="tp-row"><button class="tp-btn">不用 AI，手動建立</button><a href="ai-preview.html" class="tp-btn tp-btn--primary" style="text-decoration:none"><span class="tp-ai-dot"></span>AI 幫我拆解</a></div></div>
+</section>
+<aside class="tp-col" style="gap:16px">
+<section class="tp-card tp-card--ai"><h2 class="tp-h2" style="font-size:15px;margin-bottom:8px">AI 會做什麼？</h2><ul class="tp-sm" style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px"><li>把目標拆成 5～12 個任務</li><li>依順序排好，並建議優先級</li><li>有填期限時，才會建議每個任務的日期</li><li>列出它做的假設，讓你檢查</li></ul></section>
+<section class="tp-card"><h2 class="tp-h2" style="font-size:15px;margin-bottom:8px">範例</h2><p class="tp-sm tp-muted" style="margin:0">「研究所推甄：11 月底前完成讀書計畫、自傳與推薦信」</p></section>
+</aside></div></div></main></div>
+</body>
+</html>

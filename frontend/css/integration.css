@@ -1,0 +1,20 @@
+/* 現有 FastAPI 專案的導覽與展示狀態，保留原始設計樣式。 */
+a.tp-btn { text-decoration: none; }
+.tp-demo-note { padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-sunk); color: var(--ink-muted); font-size: 13px; line-height: 22px; }
+.tp-demo-note [role="status"] { display: block; }
+.tp-mobile-nav { display: none; }
+.tp-prototype-message { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 20; max-width: calc(100% - 32px); }
+@media (max-width: 767px) {
+  .tp-mobile-nav { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 8px; padding: 12px; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .tp-mobile-nav a { color: var(--ink-muted); text-decoration: none; font-size: 14px; }
+  .tp-mobile-nav a[aria-current="page"] { color: var(--primary); font-weight: 700; }
+  .tp-pagehead, .tp-bottombar { flex-wrap: wrap; gap: 12px; }
+  .tp-tabs { flex-wrap: wrap; }
+  .tp-task { grid-template-columns: 20px minmax(0, 1fr); }
+  .tp-task__side { grid-column: 2; }
+  .tp-grid-main[style] { grid-template-columns: 1fr !important; }
+  .tp-phone { max-width: 100%; flex-shrink: 0; }
+  body > div[style*="gap:40px"] { flex-wrap: wrap; padding: 16px !important; }
+  .tp-prototype-table { overflow-x: auto !important; }
+  .tp-prototype-table > div { min-width: 660px; }
+}

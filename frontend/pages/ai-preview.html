@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/style.css">
+<title>AI 任務預覽｜智慧任務規劃</title>
+<link rel="stylesheet" href="../css/integration.css">
+<script src="../integration.js" defer></script>
+</head>
+<body>
+<nav class="tp-mobile-nav" aria-label="手機版主要導覽"><a href="dashboard.html">首頁</a><a href="goal-detail.html" aria-current="page">我的目標</a><a href="progress.html">進度分析</a><a href="new-goal.html">新增目標</a></nav>
+<div class="tp-shell"><aside class="tp-side"><div class="tp-brand"><span class="tp-brand__mark"></span>智慧任務規劃</div>
+<nav class="tp-nav"><a href="dashboard.html" class=""><span class="tp-nav__ico"></span>首頁</a><a href="goal-detail.html" class="on"><span class="tp-nav__ico"></span>我的目標</a><a href="progress.html" class=""><span class="tp-nav__ico"></span>進度分析</a><a href="#" class=""><span class="tp-nav__ico"></span>設定</a></nav>
+<div class="tp-side__foot"><a href="new-goal.html" class="tp-btn tp-btn--primary" style="width:100%;justify-content:center;text-decoration:none"><span class="tp-ai-dot"></span>新增目標</a></div></aside>
+<main class="tp-main" style="padding-bottom:0"><div class="tp-wrap">
+<div class="tp-demo-note" role="note">第二週介面雛形 · 畫面使用範例資料，AI 與儲存功能尚未串接。<span id="backend-status" role="status">正在確認後端連線…</span></div>
+<div class="tp-pagehead"><div><p class="tp-cap" style="margin:0 0 4px">新增目標 / AI 任務草稿</p><h1 class="tp-h1">四週內完成資料分析課程期末專題</h1><p class="tp-muted" style="margin:4px 0 0"><span class="tp-chip tp-chip--ai" style="margin-right:8px"><span class="tp-ai-dot"></span>AI 草稿</span>還沒儲存。可以直接改文字、拖曳調整順序或刪除。</p></div>
+<button class="tp-btn">↻ 重新產生</button></div>
+<div class="tp-grid-side">
+<section class="tp-card" style="padding:0;overflow:hidden">
+<div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;padding:10px 16px;background:var(--surface-sunk)" class="tp-cap"><span></span><span>#</span><span>任務</span><span>優先</span><span>建議日期</span><span>預估</span><span></span></div>
+<div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">01</span>
+<div><div class="tp-task__title">確認報告格式與評分標準</div><div class="tp-task__meta">看課綱、問助教，列出必交項目</div></div><span class="tp-prio tp-prio--high" style="justify-self:start">高</span><span class="tp-sm">10/24</span><span class="tp-sm tp-muted">30 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">02</span>
+<div><div class="tp-task__title">挑選公開資料集</div><div class="tp-task__meta">比較 3 個候選資料集，和組員決定</div></div><span class="tp-prio tp-prio--high" style="justify-self:start">高</span><span class="tp-sm">10/26</span><span class="tp-sm tp-muted">90 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">03</span>
+<div><div class="tp-input tp-input--focus" style="height:34px">資料清理</div><div class="tp-task__meta">處理缺值、重複與欄位格式</div></div><span class="tp-prio tp-prio--high" style="justify-self:start">高</span><span class="tp-sm">11/02</span><span class="tp-sm tp-muted">240 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">04</span>
+<div><div class="tp-task__title">探索性分析</div><div class="tp-task__meta">描述統計與初步圖表</div></div><span class="tp-prio tp-prio--mid" style="justify-self:start">中</span><span class="tp-sm">11/06</span><span class="tp-sm tp-muted">180 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">05</span>
+<div><div class="tp-task__title">建立分析模型</div><div class="tp-task__meta">依題目選擇迴歸或分群</div></div><span class="tp-prio tp-prio--mid" style="justify-self:start">中</span><span class="tp-sm">11/11</span><span class="tp-sm tp-muted">240 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">06</span>
+<div><div class="tp-task__title">製作視覺化圖表</div><div class="tp-task__meta">整理成報告要用的 5～8 張圖</div></div><span class="tp-prio tp-prio--mid" style="justify-self:start">中</span><span class="tp-sm">11/14</span><span class="tp-sm tp-muted">180 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">07</span>
+<div><div class="tp-task__title">撰寫報告</div><div class="tp-task__meta"></div></div><span class="tp-prio tp-prio--mid" style="justify-self:start">中</span><span class="tp-sm">11/17</span><span class="tp-sm tp-muted">300 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div><div style="display:grid;grid-template-columns:16px 28px 1fr 64px 96px 84px 32px;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)">
+<span class="tp-cap" style="cursor:grab;letter-spacing:-2px">⋮⋮</span><span style="font:600 13px var(--font-num);color:var(--ink-muted)">08</span>
+<div><div class="tp-task__title">製作簡報並排練</div><div class="tp-task__meta">10 分鐘，預留問答</div></div><span class="tp-prio tp-prio--low" style="justify-self:start">低</span><span class="tp-sm">11/19</span><span class="tp-sm tp-muted">150 分</span><button class="tp-btn tp-btn--ghost tp-btn--sm" style="padding:0 6px" aria-label="刪除">✕</button></div>
+<div style="padding:12px 16px;border-top:1px solid var(--line)"><button class="tp-btn tp-btn--ghost tp-btn--sm">＋ 加一個任務</button></div></section>
+<aside class="tp-col" style="gap:16px">
+<section class="tp-card"><h2 class="tp-h2" style="font-size:15px;margin-bottom:8px">AI 對目標的理解</h2><p class="tp-sm" style="margin:0">4 週內完成資料分析專題，交付一份報告與 10 分鐘簡報，你負責資料清理與視覺化。</p></section>
+<section class="tp-card tp-card--ai"><h2 class="tp-h2" style="font-size:15px;margin-bottom:8px">AI 的假設，請確認</h2><ul class="tp-sm" style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px"><li>每週約 8 小時可用</li><li>分析方法尚未決定</li><li>「撰寫報告」由全組分工</li></ul></section>
+<div class="tp-alert tp-alert--error"><div><b>示意：AI 失敗時</b><br>AI 這次沒有回應。你可以 <u>再試一次</u>，或先手動新增任務。</div></div>
+</aside></div></div>
+<div class="tp-bottombar" style="margin-top:24px;position:static"><span class="tp-sm tp-muted">共 8 個任務 · 預估 23.5 小時 · 最後一項 11/19</span><div class="tp-row"><a href="new-goal.html" class="tp-btn tp-btn--ghost">取消</a><a href="goal-detail.html" class="tp-btn tp-btn--primary" style="text-decoration:none">確認並儲存 8 個任務</a></div></div>
+</main></div>
+</body>
+</html>

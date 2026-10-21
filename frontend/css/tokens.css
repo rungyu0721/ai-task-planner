@@ -1,0 +1,76 @@
+/* 智慧任務規劃 — 由 tokens.json 產生的 CSS 變數 */
+:root, [data-theme="light"] {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --surface-sunk: #eeebe4;
+  --line: #e1dcd2;
+  --line-strong: #cbc4b6;
+  --ink: #1d2621;
+  --ink-muted: #59645e;
+  --ink-faint: #858c87;
+  --primary: #2e5b4a;
+  --primary-hover: #23483a;
+  --primary-soft: #e2ebe6;
+  --on-primary: #ffffff;
+  --accent: #c08a2e;
+  --accent-ink: #7f5410;
+  --accent-soft: #f5ecda;
+  --status-todo: #59645e;
+  --status-todo-soft: #eceae4;
+  --status-doing: #2b5d8c;
+  --status-doing-soft: #e3ecf5;
+  --status-done: #2e6b45;
+  --status-done-soft: #e2efe6;
+  --status-overdue: #a8321f;
+  --status-overdue-soft: #f8e4df;
+  --shadow-card: 0 1px 2px rgba(29,38,33,0.06);
+  --shadow-pop: 0 8px 24px rgba(29,38,33,0.14);
+}
+[data-theme="dark"] {
+  --bg: #141816;
+  --surface: #1c211e;
+  --surface-sunk: #232925;
+  --line: #2f3632;
+  --line-strong: #46504a;
+  --ink: #ecefe9;
+  --ink-muted: #a3ada6;
+  --ink-faint: #78817b;
+  --primary: #7fbfa3;
+  --primary-hover: #98cfb6;
+  --primary-soft: #213a30;
+  --on-primary: #0f1a15;
+  --accent: #e0b25e;
+  --accent-ink: #e8c27e;
+  --accent-soft: #3a2f1a;
+  --status-todo: #a3ada6;
+  --status-todo-soft: #262c28;
+  --status-doing: #8bb8e3;
+  --status-doing-soft: #1d2c3a;
+  --status-done: #86c99d;
+  --status-done-soft: #1d3325;
+  --status-overdue: #f08f7c;
+  --status-overdue-soft: #3d211b;
+  --shadow-card: none;
+  --shadow-pop: 0 8px 24px rgba(0,0,0,0.5);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --sidebar-width: 240px;
+  --content-max: 1120px;
+  --form-max: 640px;
+  --topbar-height: 64px;
+  --bottom-nav-height: 64px;
+  --breakpoint-mobile: 768px;
+  --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-num: "Inter", "Noto Sans TC", system-ui, sans-serif;
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/style.css">
+<title>首頁｜智慧任務規劃</title>
+<link rel="stylesheet" href="../css/integration.css">
+<script src="../integration.js" defer></script>
+</head>
+<body>
+<nav class="tp-mobile-nav" aria-label="手機版主要導覽"><a href="dashboard.html" aria-current="page">首頁</a><a href="goal-detail.html">我的目標</a><a href="progress.html">進度分析</a><a href="new-goal.html">新增目標</a></nav>
+<div class="tp-shell"><aside class="tp-side"><div class="tp-brand"><span class="tp-brand__mark"></span>智慧任務規劃</div>
+<nav class="tp-nav"><a href="dashboard.html" class="on"><span class="tp-nav__ico"></span>首頁</a><a href="goal-detail.html" class=""><span class="tp-nav__ico"></span>我的目標</a><a href="progress.html" class=""><span class="tp-nav__ico"></span>進度分析</a><a href="#" class=""><span class="tp-nav__ico"></span>設定</a></nav>
+<div class="tp-side__foot"><a href="new-goal.html" class="tp-btn tp-btn--primary" style="width:100%;justify-content:center;text-decoration:none"><span class="tp-ai-dot"></span>新增目標</a></div></aside>
+<main class="tp-main"><div class="tp-wrap">
+<div class="tp-demo-note" role="note">第二週介面雛形 · 畫面使用範例資料，AI 與儲存功能尚未串接。<span id="backend-status" role="status">正在確認後端連線…</span></div>
+<div class="tp-pagehead"><div><p class="tp-cap" style="margin:0 0 4px">10 月 22 日 星期四</p><h1 class="tp-display">早安，容妤</h1><p class="tp-muted" style="margin:4px 0 0">今天有 3 件任務到期，1 件已經逾期。</p></div>
+<div class="tp-row"><button class="tp-btn">＋ 手動新增任務</button><a href="new-goal.html" class="tp-btn tp-btn--primary"><span class="tp-ai-dot"></span>新增目標，讓 AI 拆解</a></div></div>
+<div class="tp-grid-4"><div class="tp-stat "><div class="tp-stat__label">總任務數</div><div class="tp-stat__num">24</div><div class="tp-stat__hint">3 個進行中的目標</div></div><div class="tp-stat "><div class="tp-stat__label"><span class="tp-swatch" style="background:var(--status-done)"></span>已完成</div><div class="tp-stat__num">15</div><div class="tp-stat__hint">本週 +6</div></div><div class="tp-stat "><div class="tp-stat__label"><span class="tp-swatch" style="background:var(--status-doing)"></span>未完成</div><div class="tp-stat__num">8</div><div class="tp-stat__hint">含進行中 3 件</div></div><div class="tp-stat tp-stat--overdue"><div class="tp-stat__label"><span class="tp-swatch" style="background:var(--status-overdue)"></span>逾期</div><div class="tp-stat__num">1</div><div class="tp-stat__hint">點擊查看</div></div></div>
+<div class="tp-grid-main">
+<section class="tp-card" style="padding:0"><div class="tp-card__head" style="padding:20px 24px 4px"><h2 class="tp-h2">近期任務</h2><div class="tp-tabs"><span class="tp-tab tp-tab--on">今天</span><span class="tp-tab">本週</span><span class="tp-tab">逾期</span></div></div>
+<div style="padding:4px 8px 12px">
+<div class="tp-task tp-task--overdue"><span class="tp-check"></span><div><div class="tp-task__title">整理期末專題需求文件</div><div class="tp-task__meta"><span class="tp-due">10/21 已逾期 1 天</span><span>預估 60 分鐘</span><span>· 期末專題</span></div></div><div class="tp-task__side"><span class="tp-chip tp-chip--overdue">逾期</span><span class="tp-prio tp-prio--high">高</span></div></div>
+<div class="tp-task tp-task--"><span class="tp-check"></span><div><div class="tp-task__title">資料清理：處理缺值與重複資料</div><div class="tp-task__meta"><span class="tp-due">今天 23:59</span><span>預估 120 分鐘</span><span>· 期末專題</span></div></div><div class="tp-task__side"><span class="tp-chip tp-chip--doing">進行中</span><span class="tp-prio tp-prio--high">高</span></div></div>
+<div class="tp-task tp-task--"><span class="tp-check"></span><div><div class="tp-task__title">閱讀第 6 章並做筆記</div><div class="tp-task__meta"><span class="tp-due">今天</span><span>預估 45 分鐘</span><span>· 統計學期中考</span></div></div><div class="tp-task__side"><span class="tp-chip tp-chip--todo">待辦</span><span class="tp-prio tp-prio--mid">中</span></div></div>
+<div class="tp-task tp-task--"><span class="tp-check"></span><div><div class="tp-task__title">寄信給指導老師約討論時間</div><div class="tp-task__meta"><span class="tp-due">今天</span><span>預估 10 分鐘</span><span>· 研究所申請</span></div></div><div class="tp-task__side"><span class="tp-chip tp-chip--todo">待辦</span><span class="tp-prio tp-prio--low">低</span></div></div>
+<div class="tp-task tp-task--done"><span class="tp-check tp-check--on"></span><div><div class="tp-task__title">建立 GitHub 專案與分支規則</div><div class="tp-task__meta"><span class="tp-due">10/20</span><span>預估 30 分鐘</span><span>· 期末專題</span></div></div><div class="tp-task__side"><span class="tp-chip tp-chip--done">已完成</span><span class="tp-prio tp-prio--mid">中</span></div></div>
+</div><div style="padding:0 24px 20px"><a href="goal-detail.html" class="tp-btn tp-btn--ghost tp-btn--sm">查看全部任務 →</a></div></section>
+<div class="tp-col" style="gap:16px">
+<section class="tp-card"><div class="tp-card__head"><h2 class="tp-h2">整體完成率</h2><span class="tp-cap">全部目標</span></div>
+<div class="tp-row" style="gap:24px;flex-wrap:nowrap"><svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="完成率 68%"><circle cx="80.0" cy="80.0" r="71.0" fill="none" class="s-track" stroke-width="18"/><circle cx="80.0" cy="80.0" r="71.0" fill="none" class="s-done" stroke-width="18" stroke-dasharray="276.8 169.3" stroke-dashoffset="0.0" transform="rotate(-90 80.0 80.0)"/><circle cx="80.0" cy="80.0" r="71.0" fill="none" class="s-doing" stroke-width="18" stroke-dasharray="53.8 392.3" stroke-dashoffset="-278.8" transform="rotate(-90 80.0 80.0)"/><circle cx="80.0" cy="80.0" r="71.0" fill="none" class="s-todo" stroke-width="18" stroke-dasharray="90.9 355.2" stroke-dashoffset="-334.6" transform="rotate(-90 80.0 80.0)"/><circle cx="80.0" cy="80.0" r="71.0" fill="none" class="s-over" stroke-width="18" stroke-dasharray="16.6 429.5" stroke-dashoffset="-427.5" transform="rotate(-90 80.0 80.0)"/>
+<text x="50%" y="48%" text-anchor="middle" class="c-ink" style="font:700 28px var(--font-num)">68%</text><text x="50%" y="62%" text-anchor="middle" class="c-muted" style="font-size:12px">完成率</text></svg><div class="tp-legend"><span><i class="tp-swatch" style="background:var(--status-done)"></i>已完成<b>15</b></span><span><i class="tp-swatch" style="background:var(--status-doing)"></i>進行中<b>3</b></span><span><i class="tp-swatch" style="background:var(--line-strong)"></i>待辦<b>5</b></span><span><i class="tp-swatch" style="background:var(--status-overdue)"></i>逾期<b>1</b></span></div></div></section>
+<section class="tp-card tp-card--ai"><div class="tp-card__head"><span class="tp-chip tp-chip--ai"><span class="tp-ai-dot"></span>AI 今日建議</span><span class="tp-cap">僅供參考</span></div>
+<ol class="tp-sm" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>先補完<b>需求文件</b>，它已逾期，而且後面 3 件任務都要用到。</li><li>資料清理預估 2 小時，建議下午排一段完整時間。</li><li>寄信只要 10 分鐘，可以穿插在空檔。</li></ol>
+<div class="tp-row" style="margin-top:12px"><button class="tp-btn tp-btn--sm">調整今日順序</button><button class="tp-btn tp-btn--ghost tp-btn--sm">不需要</button></div></section>
+</div></div></div></main></div>
+</body>
+</html>
