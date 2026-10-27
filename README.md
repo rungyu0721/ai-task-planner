@@ -39,7 +39,7 @@ frontend/   前端頁面（HTML、CSS、JS）
 - 手機版設計示意：http://127.0.0.1:8000/static/pages/mobile.html。
 - 所有任務、統計與 AI 文字都是固定範例；確認儲存只切換頁面，不會寫入資料。
 - 表單目前是視覺稿，尚不能輸入；其餘未實作按鈕會顯示提示。
-- 第三週已新增資料庫與新增、查詢 API；前端串接、修改、刪除與 AI 功能依後續週次實作。`/api/hello`、`/docs` 繼續可用。
+- 第三週已新增資料庫與目標、任務的新增、查詢、修改、刪除 API；前端串接與 AI 功能依後續週次實作。`/api/hello`、`/docs` 繼續可用。
 
 前端結構：`frontend/pages/` 為六個展示頁面，`frontend/css/` 為樣式，
 `frontend/integration.js` 處理後端連線狀態與示意提示。
@@ -59,6 +59,10 @@ frontend/   前端頁面（HTML、CSS、JS）
 | POST | `/api/goals/{goal_id}/tasks` | 在指定目標下新增任務 |
 | GET | `/api/goals/{goal_id}/tasks` | 查詢指定目標的任務 |
 | GET | `/api/tasks/{task_id}` | 查詢單一任務 |
+| PATCH | `/api/goals/{goal_id}` | 修改目標（只更新有傳入的欄位） |
+| DELETE | `/api/goals/{goal_id}` | 刪除目標（連同其任務） |
+| PATCH | `/api/tasks/{task_id}` | 修改任務；`status` 改為 `completed` 即標記完成 |
+| DELETE | `/api/tasks/{task_id}` | 刪除任務 |
 
 列表支援 `limit`（1～100，預設 100）與 `offset`（預設 0）。
 目標依 ID 由新到舊；任務依 `sort_order`、ID 由小到大。

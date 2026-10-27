@@ -35,6 +35,30 @@ class TaskCreate(BaseModel):
     sort_order: int = Field(default=0, ge=0, strict=True)
 
 
+class GoalUpdate(BaseModel):
+    """只更新有傳入的欄位；可為空的欄位傳 null 表示清除，其餘欄位不接受 null。"""
+    model_config = ConfigDict(extra="forbid")
+
+    title: Title = None
+    description: str = Field(default=None, max_length=10000)
+    target_date: date | None = None
+    weekly_hours: int | None = Field(default=None, ge=1, le=168, strict=True)
+    status: Literal["active", "completed", "archived"] = None
+
+
+class TaskUpdate(BaseModel):
+    """只更新有傳入的欄位；status 改為 completed 時自動記錄完成時間。"""
+    model_config = ConfigDict(extra="forbid")
+
+    title: Title = None
+    description: str = Field(default=None, max_length=10000)
+    status: Literal["todo", "in_progress", "completed"] = None
+    priority: Literal["high", "medium", "low"] = None
+    due_date: date | None = None
+    estimated_minutes: int | None = Field(default=None, ge=1, strict=True)
+    sort_order: int = Field(default=None, ge=0, strict=True)
+
+
 class TaskRead(TaskCreate):
     id: int
     goal_id: int

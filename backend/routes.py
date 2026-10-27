@@ -1,12 +1,13 @@
-"""第三週：目標與任務的新增、列表及單筆查詢。"""
-from datetime import datetime, timezone
+"""第三週：目標與任務的新增、查詢、修改、刪除及標記完成。"""
+from datetime import date, datetime, timezone
 from typing import Annotated
 import sqlite3
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request, Response
 
 from backend.database import connect
-from backend.schemas import GoalCreate, GoalRead, TaskCreate, TaskRead
+from backend.schemas import (GoalCreate, GoalRead, GoalUpdate, TaskCreate, TaskRead,
+                             TaskUpdate)
 
 router = APIRouter(prefix="/api")
 Identifier = Annotated[int, Path(ge=1)]
@@ -85,7 +86,65 @@ def list_tasks(goal_id: Identifier, db: Database,
 
 @router.get("/tasks/{task_id}", response_model=TaskRead, tags=["任務"])
 def get_task(task_id: Identifier, db: Database):
+    return find_task(db, task_id)
+
+
+@router.patch("/goals/{goal_id}", response_model=GoalRead, tags=["目標"])
+def update_goal(goal_id: Identifier, body: GoalUpdate, db: Database):
+    find_goal(db, goal_id)
+    changes = to_columns(body)
+    if changes:
+        save_changes(db, "goals", goal_id, changes)
+    return find_goal(db, goal_id)
+
+
+@router.delete("/goals/{goal_id}", status_code=204, response_class=Response, tags=["目標"])
+def delete_goal(goal_id: Identifier, db: Database):
+    """刪除目標，並連帶刪除其所有任務（資料表設定 ON DELETE CASCADE）。"""
+    find_goal(db, goal_id)
+    with db:
+        db.execute("DELETE FROM goals WHERE id = ?", (goal_id,))
+
+
+@router.patch("/tasks/{task_id}", response_model=TaskRead, tags=["任務"])
+def update_task(task_id: Identifier, body: TaskUpdate, db: Database):
+    task = find_task(db, task_id)
+    changes = to_columns(body)
+    new_status = changes.get("status")
+    if new_status == "completed" and task["status"] != "completed":
+        changes["completed_at"] = datetime.now(timezone.utc).isoformat()
+    elif new_status is not None and new_status != "completed":
+        changes["completed_at"] = None
+    if changes:
+        save_changes(db, "tasks", task_id, changes)
+    return find_task(db, task_id)
+
+
+@router.delete("/tasks/{task_id}", status_code=204, response_class=Response, tags=["任務"])
+def delete_task(task_id: Identifier, db: Database):
+    find_task(db, task_id)
+    with db:
+        db.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+
+
+def find_task(db: sqlite3.Connection, task_id: int):
     row = db.execute("SELECT * FROM tasks WHERE id = ?", (task_id,)).fetchone()
     if row is None:
         raise HTTPException(status_code=404, detail="找不到此任務")
     return dict(row)
+
+
+def to_columns(body: GoalUpdate | TaskUpdate) -> dict:
+    """只取使用者有傳入的欄位，日期轉成 YYYY-MM-DD 字串。"""
+    changes = body.model_dump(exclude_unset=True)
+    return {key: value.isoformat() if isinstance(value, date) else value
+            for key, value in changes.items()}
+
+
+def save_changes(db: sqlite3.Connection, table: str, row_id: int, changes: dict) -> None:
+    # 欄位名稱來自 schemas 的固定定義，不是使用者輸入，可以安全組進 SQL。
+    changes["updated_at"] = datetime.now(timezone.utc).isoformat()
+    assignments = ", ".join(f"{column} = ?" for column in changes)
+    with db:
+        db.execute(f"UPDATE {table} SET {assignments} WHERE id = ?",
+                   (*changes.values(), row_id))

@@ -48,10 +48,10 @@ class ApiTests(unittest.TestCase):
         self.base = self.server.__enter__()
         self.addCleanup(self.server.__exit__, None, None, None)
 
-    def request(self, path, body=None):
+    def request(self, path, body=None, method=None):
         request = Request(self.base + path,
                           data=json.dumps(body).encode() if body is not None else None,
-                          headers={"Content-Type": "application/json"})
+                          headers={"Content-Type": "application/json"}, method=method)
         try:
             response = urlopen(request, timeout=5)
         except HTTPError as error:
@@ -122,6 +122,56 @@ class ApiTests(unittest.TestCase):
             self.assertEqual(connection.execute("SELECT count(*) FROM tasks").fetchone()[0], 0)
         finally:
             connection.close()
+
+    def test_update_goal(self):
+        goal = self.create_goal()
+        path = f'/api/goals/{goal["id"]}'
+        status, updated = self.request(path, {"title": " 新名稱 ", "target_date": None}, "PATCH")
+        self.assertEqual(status, 200)
+        self.assertEqual(updated["title"], "新名稱")
+        self.assertIsNone(updated["target_date"])
+        self.assertEqual(updated["weekly_hours"], 8)  # 沒傳的欄位不變
+        self.assertGreater(updated["updated_at"], goal["updated_at"])
+        self.assertEqual(self.request(path, {"status": "archived"}, "PATCH")[1]["status"], "archived")
+        for body in ({"title": None}, {"title": " "}, {"status": "done"}, {"weekly_hours": 0}, {"id": 5}):
+            with self.subTest(body=body):
+                self.assertEqual(self.request(path, body, "PATCH")[0], 422)
+        self.assertEqual(self.request("/api/goals/999", {"title": "x"}, "PATCH")[0], 404)
+
+    def test_update_and_complete_task(self):
+        goal = self.create_goal()
+        _, task = self.request(f'/api/goals/{goal["id"]}/tasks', {"title": "任務", "due_date": "2026-11-01"})
+        path = f'/api/tasks/{task["id"]}'
+        status, updated = self.request(path, {"priority": "high", "estimated_minutes": 60}, "PATCH")
+        self.assertEqual(status, 200)
+        self.assertEqual((updated["priority"], updated["estimated_minutes"]), ("high", 60))
+        self.assertEqual(updated["due_date"], "2026-11-01")
+        # 標記完成會記錄完成時間；重複標記不覆蓋；重新開啟則清除。
+        completed = self.request(path, {"status": "completed"}, "PATCH")[1]
+        self.assertIsNotNone(completed["completed_at"])
+        again = self.request(path, {"status": "completed", "title": "改名"}, "PATCH")[1]
+        self.assertEqual(again["completed_at"], completed["completed_at"])
+        reopened = self.request(path, {"status": "todo"}, "PATCH")[1]
+        self.assertIsNone(reopened["completed_at"])
+        for body in ({"status": "done"}, {"priority": None}, {"sort_order": -1}, {"goal_id": 2}, {"source": "ai"}):
+            with self.subTest(body=body):
+                self.assertEqual(self.request(path, body, "PATCH")[0], 422)
+        self.assertEqual(self.request("/api/tasks/999", {"title": "x"}, "PATCH")[0], 404)
+
+    def test_delete_task_and_goal(self):
+        goal = self.create_goal()
+        tasks_path = f'/api/goals/{goal["id"]}/tasks'
+        _, first = self.request(tasks_path, {"title": "一"})
+        self.request(tasks_path, {"title": "二"})
+        self.assertEqual(self.request(f'/api/tasks/{first["id"]}', method="DELETE")[0], 204)
+        self.assertEqual(self.request(f'/api/tasks/{first["id"]}')[0], 404)
+        self.assertEqual(len(self.request(tasks_path)[1]), 1)
+        self.assertEqual(self.request(f'/api/tasks/{first["id"]}', method="DELETE")[0], 404)
+        # 刪除目標時，其任務一併刪除。
+        self.assertEqual(self.request(f'/api/goals/{goal["id"]}', method="DELETE")[0], 204)
+        self.assertEqual(self.request(f'/api/goals/{goal["id"]}')[0], 404)
+        self.assertEqual(self.request(tasks_path)[0], 404)
+        self.assertEqual(self.request("/api/goals/999", method="DELETE")[0], 404)
 
     def test_existing_pages_and_api_docs(self):
         for path in ("/", "/docs", "/static/pages/dashboard.html", "/static/css/style.css", "/api/hello"):
