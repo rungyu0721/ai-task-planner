@@ -39,9 +39,35 @@ frontend/   前端頁面（HTML、CSS、JS）
 - 手機版設計示意：http://127.0.0.1:8000/static/pages/mobile.html。
 - 所有任務、統計與 AI 文字都是固定範例；確認儲存只切換頁面，不會寫入資料。
 - 表單目前是視覺稿，尚不能輸入；其餘未實作按鈕會顯示提示。
-- 資料庫、CRUD 與 AI API 將依後續週次串接。`/api/hello`、`/docs` 繼續可用。
+- 第三週已新增資料庫與新增、查詢 API；前端串接、修改、刪除與 AI 功能依後續週次實作。`/api/hello`、`/docs` 繼續可用。
 
 前端結構：`frontend/pages/` 為六個展示頁面，`frontend/css/` 為樣式，
 `frontend/integration.js` 處理後端連線狀態與示意提示。
 `frontend/tokens.json`、`frontend/設計規範.md` 與 `frontend/DESIGN-README.md`
 保留原始設計參考；原始 README 的 Live Server 操作不適用於整合後的入口。
+
+## 第三週：SQLite 與基礎 API
+
+啟動指令不變，首次啟動會自動建立 `backend/data/task_planner.db`，不需要另裝資料庫套件。
+資料檔已由 `.gitignore` 的 `*.db` 排除，不提交 Git。重新啟動不會清空資料，也不會自動塞入範例資料。
+
+| 方法 | 路徑 | 功能 |
+|---|---|---|
+| POST | `/api/goals` | 新增目標 |
+| GET | `/api/goals` | 目標列表 |
+| GET | `/api/goals/{goal_id}` | 查詢單一目標 |
+| POST | `/api/goals/{goal_id}/tasks` | 在指定目標下新增任務 |
+| GET | `/api/goals/{goal_id}/tasks` | 查詢指定目標的任務 |
+| GET | `/api/tasks/{task_id}` | 查詢單一任務 |
+
+列表支援 `limit`（1～100，預設 100）與 `offset`（預設 0）。
+目標依 ID 由新到舊；任務依 `sort_order`、ID 由小到大。
+
+操作範例與驗收步驟見 [第三週操作說明](docs/week3-api.md)。
+目前網頁仍使用第二週假資料；新增資料請在 `/docs` 查看，第四週再串接網頁。
+
+執行自動測試（使用臨時資料庫，不更動正式資料）：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```

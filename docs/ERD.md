@@ -2,6 +2,9 @@
 
 第一版採**單一使用者模式**，暫不建立 `users` 資料表；之後若加入登入功能，再於 `goals` 加上 `user_id`。
 
+第三週已實作 `goals`、`tasks` 與關聯索引；`ai_generation_logs` 為後續選用功能，尚未建表。
+SQLite 以 TEXT 儲存日期（YYYY-MM-DD）與 UTC 時間（ISO 8601）；API 提供型別驗證。
+
 ## 關聯圖
 
 ```mermaid
