@@ -6,7 +6,9 @@ DEFAULT_DB_PATH = Path(__file__).resolve().parent / "data" / "task_planner.db"
 
 
 def connect(db_path: Path) -> sqlite3.Connection:
-    connection = sqlite3.connect(db_path, timeout=10)
+    # FastAPI 可能在不同執行緒建立連線與執行 API；每個請求仍使用自己的連線，
+    # 不會同時共用，因此可以關閉 SQLite 的同執行緒檢查。
+    connection = sqlite3.connect(db_path, timeout=10, check_same_thread=False)
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
     return connection

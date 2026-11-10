@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/style.css">
+<title>我的目標｜智慧任務規劃</title>
+<link rel="stylesheet" href="../css/integration.css">
+<link rel="stylesheet" href="../css/app.css">
+<script src="../integration.js" defer></script>
+<script type="module" src="../js/goals.js"></script>
+</head>
+<body>
+<nav class="tp-mobile-nav" aria-label="手機版主要導覽"><a href="dashboard.html">首頁</a><a href="goals.html" aria-current="page">我的目標</a><a href="progress.html">進度分析</a><a href="new-goal.html">新增目標</a></nav>
+<div class="tp-shell"><aside class="tp-side"><div class="tp-brand"><span class="tp-brand__mark"></span>智慧任務規劃</div>
+<nav class="tp-nav"><a href="dashboard.html" class=""><span class="tp-nav__ico"></span>首頁</a><a href="goals.html" class="on"><span class="tp-nav__ico"></span>我的目標</a><a href="progress.html" class=""><span class="tp-nav__ico"></span>進度分析</a><a href="#" class=""><span class="tp-nav__ico"></span>設定</a></nav>
+<div class="tp-side__foot"><a href="new-goal.html" class="tp-btn tp-btn--primary" style="width:100%;justify-content:center;text-decoration:none"><span class="tp-ai-dot"></span>新增目標</a></div></aside>
+<main class="tp-main"><div class="tp-wrap">
+<div class="tp-pagehead"><div><h1 class="tp-h1">我的目標</h1><p class="tp-muted" style="margin:4px 0 0">點選目標可以查看與管理它的任務。</p></div>
+<a href="new-goal.html" class="tp-btn tp-btn--primary"><span class="tp-ai-dot"></span>新增目標</a></div>
+<div id="goal-list" class="app-goal-list" aria-live="polite"><p class="tp-muted">載入中…</p></div>
+</div></main></div>
+</body>
+</html>

@@ -28,9 +28,11 @@ function showPrototypeNotice() {
   }, 3500);
 }
 
+// 尚未實作的按鈕顯示提示；已串接的功能（data-action、表單、對話框、分頁）不攔截。
 document.addEventListener('click', event => {
   const placeholder = event.target.closest('button, a[href="#"]');
   if (!placeholder) return;
+  if (placeholder.closest('[data-action], [data-filter], form, dialog') || placeholder.id === 'ai-button') return;
   event.preventDefault();
   showPrototypeNotice();
 });

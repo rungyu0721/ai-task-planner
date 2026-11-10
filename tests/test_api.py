@@ -173,6 +173,15 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(self.request(tasks_path)[0], 404)
         self.assertEqual(self.request("/api/goals/999", method="DELETE")[0], 404)
 
+    def test_concurrent_requests(self):
+        # 網頁會同時發出多個請求（例如同時載入目標與任務），不能出現 500。
+        from concurrent.futures import ThreadPoolExecutor
+        goal = self.create_goal()
+        paths = [f'/api/goals/{goal["id"]}', f'/api/goals/{goal["id"]}/tasks'] * 20
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            statuses = list(pool.map(lambda path: self.request(path)[0], paths))
+        self.assertEqual(set(statuses), {200})
+
     def test_existing_pages_and_api_docs(self):
         for path in ("/", "/docs", "/static/pages/dashboard.html", "/static/css/style.css", "/api/hello"):
             self.assertEqual(self.request(path)[0], 200)
