@@ -24,6 +24,11 @@ textarea.tp-input { resize: vertical; padding-bottom: 8px; }
 .app-tab.tp-tab--on { background: var(--surface); }
 .app-check { padding: 0; cursor: pointer; }
 .app-check:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.app-tab.app-danger { color: var(--status-overdue); }
+
+/* 第五週：排序選單與逾期提示 */
+select.tp-input.app-sort { width: auto; height: 32px; }
+.app-overdue-note { color: var(--status-overdue); font-weight: 500; }
 
 /* 對話框 */
 .app-dialog { width: min(560px, calc(100% - 32px)); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-5); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-pop); }

@@ -1,5 +1,5 @@
 // 我的目標：列出所有目標與各自的完成進度。
-import { api, escapeHtml, formatDate, progressOf } from './api.js';
+import { api, escapeHtml, formatDate, isOverdue, progressOf } from './api.js';
 
 const list = document.getElementById('goal-list');
 
@@ -25,12 +25,14 @@ async function load() {
 function goalCard(goal, tasks) {
   const { done, total, percent } = progressOf(tasks);
   const deadline = goal.target_date ? `目標期限 ${formatDate(goal.target_date)}` : '未設定期限';
+  const overdue = tasks.filter(isOverdue).length;
+  const overdueNote = overdue ? ` · <span class="app-overdue-note">${overdue} 個任務逾期</span>` : '';
   return `<a class="tp-card app-goal-card" href="goal-detail.html?id=${goal.id}">
     <div class="tp-row" style="justify-content:space-between">
       <h2 class="tp-h2">${escapeHtml(goal.title)}</h2>
       ${goal.status === 'active' ? '' : `<span class="tp-chip tp-chip--todo">${STATUS_LABEL[goal.status]}</span>`}
     </div>
-    <p class="tp-sm tp-muted" style="margin:4px 0 12px">${deadline}</p>
+    <p class="tp-sm tp-muted" style="margin:4px 0 12px">${deadline}${overdueNote}</p>
     <div class="tp-row" style="flex-wrap:nowrap;gap:16px">
       <div class="tp-bar" style="flex:1"><i style="width:${percent}%"></i></div>
       <span class="tp-sm app-num">${done} / ${total} · ${percent}%</span>

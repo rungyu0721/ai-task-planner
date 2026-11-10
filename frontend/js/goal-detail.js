@@ -1,6 +1,8 @@
 // 目標詳情：顯示目標與任務，並提供任務的新增、編輯、刪除、標記完成，以及目標的編輯、刪除。
+// 第五週：逾期任務標紅、逾期分頁，以及依截止日期或優先級排序。
 import {
-  api, daysUntil, escapeHtml, fillForm, formatDate, PRIORITY, progressOf, readForm, showToast, STATUS,
+  api, daysUntil, dueHint, escapeHtml, fillForm, formatDate, isOverdue, PRIORITY, progressOf, readForm,
+  showToast, sortTasks, STATUS,
 } from './api.js';
 
 const goalId = Number(new URLSearchParams(location.search).get('id'));
@@ -13,13 +15,15 @@ const goalForm = goalDialog.querySelector('form');
 let goal = null;
 let tasks = [];
 let filter = 'all';
+let sortBy = 'default';
 let editingTaskId = null; // null 表示新增任務
 
 const FILTERS = [
-  { key: 'all', label: '全部' },
-  { key: 'todo', label: '待辦' },
-  { key: 'in_progress', label: '進行中' },
-  { key: 'completed', label: '已完成' },
+  { key: 'all', label: '全部', match: () => true },
+  { key: 'todo', label: '待辦', match: task => task.status === 'todo' },
+  { key: 'in_progress', label: '進行中', match: task => task.status === 'in_progress' },
+  { key: 'completed', label: '已完成', match: task => task.status === 'completed' },
+  { key: 'overdue', label: '逾期', match: isOverdue },
 ];
 
 async function load() {
@@ -61,14 +65,16 @@ function render() {
   document.getElementById('goal-bar').style.width = `${percent}%`;
   document.getElementById('goal-progress').textContent = `${done} / ${total} · ${percent}%`;
 
-  document.getElementById('status-tabs').innerHTML = FILTERS.map(({ key, label }) => {
-    const count = key === 'all' ? tasks.length : tasks.filter(task => task.status === key).length;
+  document.getElementById('status-tabs').innerHTML = FILTERS.map(({ key, label, match }) => {
+    const count = tasks.filter(match).length;
     const on = key === filter;
-    return `<button type="button" role="tab" aria-selected="${on}" class="tp-tab app-tab${on ? ' tp-tab--on' : ''}"
+    const danger = key === 'overdue' && count > 0 ? ' app-danger' : '';
+    return `<button type="button" role="tab" aria-selected="${on}" class="tp-tab app-tab${on ? ' tp-tab--on' : ''}${danger}"
       data-filter="${key}">${label} ${count}</button>`;
   }).join('');
 
-  const shown = filter === 'all' ? tasks : tasks.filter(task => task.status === filter);
+  const { match } = FILTERS.find(item => item.key === filter);
+  const shown = sortTasks(tasks.filter(match), sortBy);
   taskList.innerHTML = shown.length
     ? shown.map(taskRow).join('')
     : `<p class="tp-muted app-empty">${tasks.length ? '這個分類沒有任務。' : '還沒有任務，按「＋ 新增任務」開始規劃。'}</p>`;
@@ -78,16 +84,19 @@ function taskRow(task) {
   const done = task.status === 'completed';
   const status = STATUS[task.status];
   const priority = PRIORITY[task.priority];
+  const overdue = isOverdue(task);
+  const hint = dueHint(task);
   const meta = [];
-  if (task.due_date) meta.push(`<span class="tp-due">${formatDate(task.due_date, true)}</span>`);
+  if (task.due_date) meta.push(`<span class="tp-due">截止 ${formatDate(task.due_date, true)}${hint ? ` · ${hint}` : ''}</span>`);
   if (task.estimated_minutes) meta.push(`<span>預估 ${task.estimated_minutes} 分鐘</span>`);
-  return `<div class="tp-task${done ? ' tp-task--done' : ''}" data-id="${task.id}">
+  return `<div class="tp-task${done ? ' tp-task--done' : ''}${overdue ? ' tp-task--overdue' : ''}" data-id="${task.id}">
     <button type="button" class="tp-check app-check${done ? ' tp-check--on' : ''}" data-action="toggle"
       aria-label="${done ? '取消完成' : '標記完成'}：${escapeHtml(task.title)}" aria-pressed="${done}"></button>
     <div><div class="tp-task__title">${escapeHtml(task.title)}</div>
       ${task.description ? `<div class="tp-sm tp-muted">${escapeHtml(task.description)}</div>` : ''}
       ${meta.length ? `<div class="tp-task__meta">${meta.join('')}</div>` : ''}</div>
     <div class="tp-task__side">
+      ${overdue ? '<span class="tp-chip tp-chip--overdue">逾期</span>' : ''}
       <span class="tp-chip tp-chip--${status.chip}">${status.label}</span>
       <span class="tp-prio tp-prio--${priority.cls}">${priority.label}</span>
       <button type="button" class="tp-btn tp-btn--ghost tp-btn--sm" data-action="edit-task">編輯</button>
@@ -117,6 +126,11 @@ document.addEventListener('click', async event => {
     'delete-goal': () => deleteGoal(),
   };
   await actions[button.dataset.action]?.();
+});
+
+document.getElementById('task-sort').addEventListener('change', event => {
+  sortBy = event.target.value;
+  render();
 });
 
 async function toggleTask(task) {

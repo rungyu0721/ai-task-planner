@@ -74,6 +74,35 @@ export function daysUntil(value) {
   return Math.round((new Date(year, month - 1, day) - start) / 86400000);
 }
 
+// 有截止日期、尚未完成、且截止日已過（早於今天）的任務視為逾期。
+export function isOverdue(task) {
+  return task.status !== 'completed' && Boolean(task.due_date) && daysUntil(task.due_date) < 0;
+}
+
+// 截止日期的提示文字：逾期幾天、今天或明天到期；其他情況不顯示。
+export function dueHint(task) {
+  if (task.status === 'completed' || !task.due_date) return '';
+  const days = daysUntil(task.due_date);
+  if (days < 0) return `逾期 ${-days} 天`;
+  if (days === 0) return '今天到期';
+  if (days === 1) return '明天到期';
+  return '';
+}
+
+const PRIORITY_RANK = { high: 0, medium: 1, low: 2 };
+
+// 排序方式：default 依原本順序；due 依截止日期（未設定的排最後）；priority 依優先級再看截止日期。
+export function sortTasks(tasks, by) {
+  const byOrder = (a, b) => a.sort_order - b.sort_order || a.id - b.id;
+  const byDue = (a, b) => (a.due_date ?? '9999-12-31').localeCompare(b.due_date ?? '9999-12-31');
+  const compare = {
+    default: byOrder,
+    due: (a, b) => byDue(a, b) || byOrder(a, b),
+    priority: (a, b) => PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority] || byDue(a, b) || byOrder(a, b),
+  }[by];
+  return [...tasks].sort(compare);
+}
+
 // 讀取表單欄位：數字與日期留空時送 null，文字送字串。
 export function readForm(form) {
   const body = {};

@@ -26,7 +26,8 @@
 <div class="tp-row" style="margin-top:16px;gap:16px;flex-wrap:nowrap"><div class="tp-bar" style="flex:1"><i id="goal-bar" style="width:0%"></i></div><span class="tp-sm app-num" id="goal-progress">0 / 0 · 0%</span></div></section>
 <div class="tp-row" style="justify-content:space-between">
 <div class="tp-tabs" id="status-tabs" role="tablist"></div>
-<button type="button" class="tp-btn tp-btn--primary tp-btn--sm" data-action="add-task">＋ 新增任務</button></div>
+<div class="tp-row"><label class="tp-sm tp-muted" for="task-sort">排序</label><select id="task-sort" class="tp-input app-sort"><option value="default">預設順序</option><option value="due">截止日期</option><option value="priority">優先級</option></select>
+<button type="button" class="tp-btn tp-btn--primary tp-btn--sm" data-action="add-task">＋ 新增任務</button></div></div>
 <section class="tp-card" style="padding:8px" id="task-list" aria-live="polite"></section>
 </div></main></div>
 
