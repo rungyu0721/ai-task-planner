@@ -95,3 +95,20 @@ frontend/   前端頁面（HTML、CSS、JS）
 - **我的目標**：目標卡片會顯示有幾個任務逾期。
 
 判斷與排序邏輯位於 `frontend/js/api.js` 的 `isOverdue`、`dueHint`、`sortTasks`。
+
+## 第六週：AI 提示詞與 JSON 輸出格式
+
+`backend/ai_planner.py` 負責 AI 任務拆解的「問法」與「回傳格式」：
+
+- **提示詞**（`build_prompt`）：帶入目標名稱、說明、今天日期、希望完成日期與每週可用時間，並規定拆解規則：3～12 個任務、以動詞開頭、每個 5～600 分鐘、截止日期介於今天與完成日期之間且平均分配、總時間不超過可用時間。
+- **輸出格式**（`AiPlan`）：`summary`（整體規劃說明）與 `tasks`（每個任務含 `title`、`description`、`priority`、`due_date`、`estimated_minutes`），欄位與資料庫的任務對應。呼叫 Gemini 時設定只回傳符合此結構的 JSON。
+- **檢查**（`parse_plan`）：去除 ```json 標記、驗證欄位與數值；截止日期超出範圍時自動調整到今天或完成日期；其他錯誤（不是 JSON、缺欄位、優先級錯誤等）回傳清楚的錯誤訊息。
+
+實際測試 AI 拆解（需要 `.env` 的金鑰）：
+
+```powershell
+.\.venv\Scripts\python.exe scripts\try_ai_plan.py
+.\.venv\Scripts\python.exe scripts\try_ai_plan.py "準備多益考試" --description "目標 800 分" --days 30 --hours 6 --show-prompt
+```
+
+`tests/test_ai_planner.py` 以假的 AI 回應測試提示詞與檢查邏輯，不會呼叫 Gemini、不消耗額度。網頁串接與失敗時改用其他模型於第七週完成。
